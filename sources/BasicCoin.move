@@ -29,6 +29,11 @@ module BasicCoin {
         borrow_global<Balance>(owner).coin.value
     }
 
+    spec balance_of {
+        pragma verify = false;
+        ensures result == borrow_global<Balance>(owner).coin.value;
+    }
+
     public fun transfer(from: &signer, to: address, amount: u64) acquires Balance {
         let from_addr = signer::address_of(from);
         assert!(from_addr != to, EEQUAL_ADDR);
